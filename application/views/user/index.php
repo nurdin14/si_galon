@@ -6,8 +6,11 @@
         <div class="row">
             <div class="col">
                 <div class="card">
+                    <div class="card-header">
+                        <?= $this->session->flashdata('pesan'); ?>
+                    </div>
                     <div class="card-body">
-                        <h1>Selamat Datang, <?= $this->session->userdata('nama'); ?></h1>
+                        <h1>Selamat Datang, <?= $this->session->userdata('nama') ?></h1>
                     </div>
                 </div>
             </div>

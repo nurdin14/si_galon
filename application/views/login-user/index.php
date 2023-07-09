@@ -23,7 +23,7 @@
                                         <div class="d-block">
                                             <label for="password" class="control-label">Password</label>
                                             <div class="float-right">
-                                                <a href="<?= base_url('login/lupaPassword') ?>" class="text-small">
+                                                <a href="<?= base_url('login_user/lupaPassword') ?>" class="text-small">
                                                     Lupa Password?
                                                 </a>
                                             </div>
@@ -43,6 +43,6 @@
                             </div>
                         </div>
                         <div class="mt-5 text-muted text-center">
-                            Belum Mempunyai Akun? <a href="<?= base_url('login/register') ?>">Buat Akun</a>
+                            Belum Mempunyai Akun? <a href="<?= base_url('login_user/register') ?>">Buat Akun</a>
                         </div>
                     </div>

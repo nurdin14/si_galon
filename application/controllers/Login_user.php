@@ -115,23 +115,21 @@ class Login_user extends CI_Controller {
         ];
 
         $this->load->view('template/header-login', $data);
-        $this->load->view('login/regis');
+        $this->load->view('login-user/regis');
         $this->load->view('template/footer-login');
 
         if (isset($_POST['simpan'])) {
             $data = [
-                'id_petugas' => $this->input->post('id_petugas'),
+                'id_pelanggan' => $this->input->post('id_pelanggan'),
                 'nama' => $this->input->post('nama'),
-                'umur' => $this->input->post('umur'),
                 'no_hp' => $this->input->post('no_hp'),
                 'alamat' => $this->input->post('alamat'),
-                'level' => $this->input->post('level'),
                 'username' => $this->input->post('username'),
                 'password' => $this->input->post('password'),
             ];
 
-            $this->m_login->addRegister($data);
-            redirect('login/index');
+            $this->db->insert('tb_pelanggan', $data);
+            redirect('login_user/index');
         }
     }
 }

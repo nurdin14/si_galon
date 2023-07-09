@@ -89,4 +89,49 @@ class User extends CI_Controller {
         $this->load->view('user/order/v_keranjang', $data);
         $this->load->view('template/footer-user');
     }
+
+    //ubah frofil
+    public function ubahProfil()
+    {
+        $pelanggan = $this->session->userdata('id_pelanggan');
+        $data = [
+            'title' => 'Ubah Profil',
+            'profil' => $this->db->query("select * from tb_pelanggan where id_pelanggan ='$pelanggan'")->result_array()
+        ];
+
+        $this->load->view('template/header-user', $data);
+        $this->load->view('template/sidebar-user');
+        $this->load->view('user/v_edit', $data);
+        $this->load->view('template/footer-user');
+
+        if (isset($_POST['simpan'])) {
+
+            $addData = [
+                'id_pelanggan' => $this->input->post('id_pelanggan'),
+                'nama' => $this->input->post('nama'),
+                'no_hp' => $this->input->post('no_hp'),
+                'alamat' => $this->input->post('alamat'),
+                'username' => $this->input->post('username'),
+                'password' => $this->input->post('password'),
+            ];
+
+            $where = ['id_pelanggan' => $addData['id_pelanggan']];
+
+            $this->db->update('tb_pelanggan', $addData, $where);
+            
+            $this->session->set_flashdata('pesan', '
+                <div class="alert alert-success alert-has-icon alert-dismissible show fade">
+                      <div class="alert-icon"><i class="far fa-lightbulb"></i></div>
+                      <div class="alert-body">
+                        <button class="close" data-dismiss="alert">
+                          <span>&times;</span>
+                        </button>
+                        <div class="alert-title">Berhasil</div>
+                        Data Berhasil Di Ubah.
+                      </div>
+                    </div>
+            ');
+            redirect('user/index');
+        }
+    }
 }

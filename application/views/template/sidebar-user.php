@@ -18,7 +18,7 @@
             </li>
             <hr>
             <li class="dropdown">
-                <a href="<?= site_url('Profil') ?>" class="nav-link"><i class="fas fa-user"></i><span>Ubah Profil</span></a>
+                <a href="<?= site_url('user/ubahProfil') ?>" class="nav-link"><i class="fas fa-user"></i><span>Ubah Profil</span></a>
             </li>
         </ul>
     </aside>
