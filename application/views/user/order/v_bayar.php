@@ -6,7 +6,43 @@
             </h1>
         </div>
         <div class="row">
-            <div class="col">
+            <div class="col-5">
+                <div class="card">
+                    <div class="card-header">Data Anda</div>
+                    <div class="card-body">
+                        <table class="table table-striped">
+                            <?php foreach($Biodata as $b): ?>
+                            <tr>
+                                <td>Nama Anda:</td>
+                                <td>:</td>
+                                <td><?= $b['nama'] ?></td>
+                            </tr>
+                            <tr>
+                                <td>No.Hp</td>
+                                <td>:</td>
+                                <td><?= $b['no_hp'] ?></td>
+                            </tr>
+                            <tr>
+                                <td>Alamat</td>
+                                <td>:</td>
+                                <td><?= $b['alamat'] ?></td>
+                            </tr>
+                            <tr>
+                                <td>Pesanan Anda</td>
+                                <td>:</td>
+                                <td><?= $b['judul'] ?></td>
+                            </tr>
+                            <tr>
+                                <td>Keterangan</td>
+                                <td>:</td>
+                                <td><?= $b['deskripsi'] ?></td>
+                            </tr>
+                            <?php endforeach; ?>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-7">
                 <div class="card">
                     <div class="card-header">
                         <h4>

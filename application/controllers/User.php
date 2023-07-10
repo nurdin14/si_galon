@@ -138,16 +138,17 @@ class User extends CI_Controller {
     public function checkout($id_order)
     {
         $where = ['id_order' => $id_order];
+        $pelanggan = $this->session->userdata('nama');
         $data = [
             'title' => 'Checkout',
-            'Checkout' => $this->db->get_where('tb_order', $where)->result_array()
+            'Checkout' => $this->db->get_where('tb_order', $where)->result_array(),
+            'Biodata' => $this->db->query("SELECT tb_pelanggan.nama, tb_pelanggan.no_hp, tb_pelanggan.alamat, tb_product.deskripsi, tb_product.judul, tb_order.id_order  FROM tb_product, tb_pelanggan, tb_order WHERE tb_product.id_product=tb_order.id_product and tb_pelanggan.id_pelanggan=tb_order.id_pelanggan and tb_pelanggan.nama='$pelanggan'")->result_array(),
         ];
 
         $this->load->view('template/header-user', $data);
         $this->load->view('template/sidebar-user');
         $this->load->view('user/order/v_bayar', $data);
         $this->load->view('template/footer-user');
-
         
     }
 
