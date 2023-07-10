@@ -39,6 +39,42 @@
 <!-- Template JS File -->
 <script src="<?= base_url() ?>assets/js/scripts.js"></script>
 <script src="<?= base_url() ?>assets/js/custom.js"></script>
+
+<!-- Custom JS -->
+<script>
+    function showForm() {
+            var paymentMethod = document.getElementById("paymentMethod").value;
+            var transferForm = document.getElementById("transferForm");
+            var codForm = document.getElementById("codForm");
+
+            if (paymentMethod === "Transfer") {
+                transferForm.style.display = "block";
+                bankText.style.display = "block";
+                codForm.style.display = "none";
+            } else if (paymentMethod === "Cod") {
+                transferForm.style.display = "none";
+                bankText.style.display = "none";
+                codForm.style.display = "block";
+            } else {
+                transferForm.style.display = "none";
+                bankText.style.display = "none";
+                codForm.style.display = "none";
+            }
+        }
+
+        document.getElementById("paymentForm").addEventListener("submit", function (event) {
+            event.preventDefault(); // Prevent form submission
+
+            var paymentMethod = document.getElementById("paymentMethod").value;
+            var accountNumber = document.getElementById("accountNumber").value;
+            var description = document.getElementById("description").value;
+
+            document.getElementById("paymentForm").reset();
+            document.getElementById("transferForm").style.display = "none";
+            document.getElementById("bankText").style.display = "none";
+            document.getElementById("codForm").style.display = "none";
+        });
+</script>
 </body>
 
 </html>

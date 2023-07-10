@@ -134,4 +134,38 @@ class User extends CI_Controller {
             redirect('user/index');
         }
     }
+
+    public function checkout($id_order)
+    {
+        $where = ['id_order' => $id_order];
+        $data = [
+            'title' => 'Checkout',
+            'Checkout' => $this->db->get_where('tb_order', $where)->result_array()
+        ];
+
+        $this->load->view('template/header-user', $data);
+        $this->load->view('template/sidebar-user');
+        $this->load->view('user/order/v_bayar', $data);
+        $this->load->view('template/footer-user');
+
+        
+    }
+
+    public function prosesCekout()
+    {
+        if (isset($_POST['simpan'])) {
+            $add = [
+                'id_transaksi' => $this->input->post('id_transaksi'),
+                'id_petugas' => $this->input->post('id_petugas'),
+                'id_order' => $this->input->post('id_order'),
+                'jumlah' => $this->input->post('jumlah'),
+                'harga' => $this->input->post('harga'),
+                'metode_bayar' => $this->input->post('metode_bayar'),
+                'tanggal' => $this->input->post('tanggal')
+            ];
+
+            $this->db->insert('transaksi', $add);
+            redirect('user/keranjang');
+        }
+    }
 }

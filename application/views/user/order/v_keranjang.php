@@ -46,7 +46,7 @@
                                                 <?= $t['harga']; ?>
                                             </td>
                                             <td>
-                                                <a href="<?= site_url('user/keranjang/' . $t['id_order']); ?>" class="btn btn-danger">Check Out</a>
+                                                <a href="<?= site_url('user/checkout/' . $t['id_order']); ?>" class="btn btn-danger">Check Out</a>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
