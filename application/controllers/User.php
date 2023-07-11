@@ -56,7 +56,8 @@ class User extends CI_Controller {
                 'id_product' => $this->input->post('id_product'),
                 'id_pelanggan' => $this->input->post('id_pelanggan'),
                 'jumlah' => $this->input->post('jumlah'),
-                'harga' => $this->input->post('harga')
+                'harga' => $this->input->post('harga'),
+                'status' => "Dipesan"
             ];
 
             $this->m_order->Po($tambahData);
@@ -73,6 +74,7 @@ class User extends CI_Controller {
                     </div>
             ');
             redirect('user/keranjang');
+            
         }
     }
 
