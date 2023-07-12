@@ -2,24 +2,14 @@
     <table border="1" cellspacing="0" cellpadding="2">
         <?php foreach($tampil as $t): ?>
         <tr>
-            <td>ID Transaksi</td>
-            <td>:</td>
-            <td><?= $t['id_transaksi'] ?></td>
-        </tr>
-        <tr>
             <td>Nama Pelanggan</td>
             <td>:</td>
-            <td><?= $t['nama_pelanggan'] ?></td>
+            <td><?= $t['nama'] ?></td>
         </tr>
         <tr>
             <td>Nama Produk</td>
             <td>:</td>
             <td><?= $t['judul'] ?></td>
-        </tr>
-        <tr>
-            <td>Type</td>
-            <td>:</td>
-            <td><?= $t['merk'] ?></td>
         </tr>
         <tr>
             <td>Jumlah</td>
@@ -39,6 +29,6 @@
         <?php endforeach; ?>
     </table>
 </center>
-<!-- <script>
+<script>
     window.print();
-</script> -->
+</script>

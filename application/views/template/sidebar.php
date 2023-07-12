@@ -18,7 +18,10 @@
                 </ul>
             </li>
             <li class="dropdown">
-                <a href="<?= site_url('Product/index') ?>" class="nav-link"><i class="fas fa-tag"></i><span>Kelola Data Product</span></a>
+                <a href="<?= site_url('Product/index') ?>" class="nav-link"><i class="fas fa-archive"></i><span>Kelola Data Product</span></a>
+            </li>
+            <li class="dropdown">
+                <a href="<?= site_url('Pesanan/index') ?>" class="nav-link"><i class="fas fa-tag"></i><span>Kelola Pesanan</span></a>
             </li>
             <li class="dropdown">
                 <a href="<?= site_url('Transaksi/index') ?>" class="nav-link"><i class="fas fa-credit-card"></i><span>Transaksi</span></a>

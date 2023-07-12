@@ -7,11 +7,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <a href="<?= site_url('pelanggan/cetakPelanggan/'); ?>" class="btn btn-icon icon-left btn-danger" target="__blank"><i class="fas fa-file"></i>Cetak Pelanggan</a>
-                            </div>
-                        </div>
+                        
                     </div>
                     <div class="card-body">
                         <?= $this->session->flashdata('pesan'); ?>
@@ -26,7 +22,6 @@
                                     <th>ID Pelanggan</th>
                                     <th>Jumlah</th>
                                     <th>Harga</th>
-                                    <th>Status</th>
                                     <th>Action</th>
                                 </thead>
                                 <tbody>
@@ -52,16 +47,7 @@
                                                     <?= $t['harga']; ?>
                                                 </td>
                                                 <td>
-                                                    <?php 
-                                                        if($t['status'] == "Dipesan") {
-                                                            echo $t['status'];
-                                                        } else {
-                                                            echo $t['status'];
-                                                        }
-                                                    ?>
-                                                </td>
-                                                <td>
-                                                    <a href="<?= site_url('pesanan/v_edit/' . $t['id_order']); ?>" class="btn btn-info">Edit</a>
+                                                    <a href="<?= site_url('pesanan/edit/' . $t['id_pelanggan']); ?>" class="btn btn-info">Edit</a>
                                                 </td>
                                             </tr>
                                     <?php endforeach; ?>
