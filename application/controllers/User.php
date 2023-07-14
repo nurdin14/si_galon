@@ -56,8 +56,7 @@ class User extends CI_Controller {
                 'id_product' => $this->input->post('id_product'),
                 'id_pelanggan' => $this->input->post('id_pelanggan'),
                 'jumlah' => $this->input->post('jumlah'),
-                'harga' => $this->input->post('harga'),
-                'status' => "Dipesan"
+                'harga' => $this->input->post('harga')
             ];
 
             $this->m_order->Po($tambahData);
@@ -83,13 +82,21 @@ class User extends CI_Controller {
         $pelanggan = $this->session->userdata('id_pelanggan');
         $data = [
             'title' => 'Keranjang Belanja',
-            'keranjang' => $this->db->query("select * from tb_order where id_pelanggan ='$pelanggan'")->result_array()
+            'keranjang' => $this->db->query("select * from tb_order where id_pelanggan ='$pelanggan' and deleted = 1")->result_array()
         ];
 
         $this->load->view('template/header-user', $data);
         $this->load->view('template/sidebar-user');
         $this->load->view('user/order/v_keranjang', $data);
         $this->load->view('template/footer-user');
+    }
+
+    public function sofDelete($id_order)
+    {
+        $this->db->set('deleted', '1');
+        $this->db->where('id_order', $id_order);
+        $this->db->update('tb_order');
+        redirect('user/keranjang');
     }
 
     //ubah frofil
