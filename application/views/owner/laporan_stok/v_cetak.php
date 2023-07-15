@@ -5,12 +5,11 @@
                 <th>
                     No
                 </th>
+                <th>Kode</th>
                 <th>Judul</th>
-                <th>Type</th>
-                <th>Foto</th>
                 <th>Deskripsi</th>
                 <th>Harga</th>
-                <th>Stok Barang</th>
+                <th>Stok</th>
             </tr>
         </thead>
         <tbody>
@@ -18,13 +17,20 @@
             foreach ($tampil as $t) : ?>
                 <tr>
                     <td><?= $no++; ?></td>
-                    <td><?= $t['judul']; ?></td>
-                    <td><?= $t['merk']; ?></td>
-                    <td><img src="<?= base_url() ?>assets/img/product/<?= $t['foto']; ?>" width="90"></td>
-                    <td><?= $t['deskripsi']; ?></td>
-                    <td><?= $t['harga']; ?></td>
-                    <td><?= $t['stok']; ?></td>
-                </tr>
+                    <td><?= $t['kode']; ?></td>
+                        <td>
+                            <?= $t['judul']; ?>
+                        </td>
+                        <td>
+                            <?= $t['deskripsi']; ?>
+                        </td>
+                        <td>
+                            <?= $t['harga'] ?>
+                        </td>
+                        <td>
+                            <?= $t['jumlah']; ?>
+                        </td>
+                    </tr>
             <?php endforeach; ?>
         </tbody>
     </table>

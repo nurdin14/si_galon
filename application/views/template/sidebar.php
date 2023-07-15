@@ -26,6 +26,9 @@
             <li class="dropdown">
                 <a href="<?= site_url('Transaksi/index') ?>" class="nav-link"><i class="fas fa-credit-card"></i><span>Transaksi</span></a>
             </li>
+            <li class="dropdown">
+                <a href="<?= site_url('Penghasilan/index') ?>" class="nav-link"><i class="fas fa-book-reader"></i><span>Rekap Pendapatan</span></a>
+            </li>
         </ul>
     </aside>
 </div>

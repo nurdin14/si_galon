@@ -20,7 +20,7 @@ class M_owner extends CI_Model
 
     public function sumTransaksi()
     {
-        return $this->db->query("SELECT sum(harga) as total from tb_transaksi");
+        return $this->db->query("SELECT sum(harga) as total from transaksi");
     }
 
     public function laporanStok()
@@ -30,11 +30,11 @@ class M_owner extends CI_Model
 
     public function laporanJual()
     {
-        return $this->db->get('struk_pembayaran');
+        return $this->db->get('tb_penghasilan');
     }
 
-    public function sumTotal()
-    {
-        return $this->db->query("SELECT sum(harga*jumlah) as total from struk_pembayaran");
-    }
+    // public function sumTotal()
+    // {
+    //     return $this->db->query("SELECT sum(harga*jumlah) as total from struk_pembayaran");
+    // }
 }

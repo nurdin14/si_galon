@@ -53,7 +53,7 @@ class Owner extends CI_Controller
     {
         $data = [
             'title' => 'Laporan Penjualan',
-            'total_p' => $this->m_owner->sumTotal()->result_array(),
+            'pendapatan' => $this->db->query("SELECT sum(tb_penghasilan.pemasukan) - SUM(tb_penghasilan.pengeluaran) as jumlah_pendapatan FROM tb_penghasilan")->result_array(),
             'tampil' => $this->m_owner->laporanJual()->result_array()
         ];
 
@@ -66,7 +66,7 @@ class Owner extends CI_Controller
     public function cetakJual()
     {
         $data = [
-            'total' => $this->m_owner->sumTotal()->result_array(),
+            'pendapatan' => $this->db->query("SELECT sum(tb_penghasilan.pemasukan) - SUM(tb_penghasilan.pengeluaran) as jumlah_pendapatan FROM tb_penghasilan")->result_array(),
             'tampil' => $this->m_owner->laporanJual()->result_array()
         ];
         $this->load->view('owner/laporan_jual/v_cetak', $data);

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 09 Jul 2023 pada 10.27
+-- Waktu pembuatan: 15 Jul 2023 pada 06.16
 -- Versi server: 10.4.27-MariaDB
 -- Versi PHP: 7.4.33
 
@@ -32,16 +32,27 @@ CREATE TABLE `tb_order` (
   `id_product` int(11) NOT NULL,
   `id_pelanggan` int(11) NOT NULL,
   `jumlah` int(11) NOT NULL,
-  `harga` int(11) NOT NULL
+  `harga` int(11) NOT NULL,
+  `deleted` enum('0','1') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data untuk tabel `tb_order`
 --
 
-INSERT INTO `tb_order` (`id_order`, `id_product`, `id_pelanggan`, `jumlah`, `harga`) VALUES
-(2, 7, 1, 2, 18000),
-(3, 8, 2, 2, 22);
+INSERT INTO `tb_order` (`id_order`, `id_product`, `id_pelanggan`, `jumlah`, `harga`, `deleted`) VALUES
+(7, 7, 1, 5, 18000, '0');
+
+--
+-- Trigger `tb_order`
+--
+DELIMITER $$
+CREATE TRIGGER `t_order` AFTER INSERT ON `tb_order` FOR EACH ROW BEGIN
+UPDATE tb_product set jumlah=jumlah - NEW.jumlah
+WHERE id_product = NEW.id_product;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -63,9 +74,31 @@ CREATE TABLE `tb_pelanggan` (
 --
 
 INSERT INTO `tb_pelanggan` (`id_pelanggan`, `nama`, `alamat`, `no_hp`, `username`, `password`) VALUES
-(1, 'Asep', 'Maja', '085722384826', 'Asep', 'asep'),
+(1, 'Asep', 'Majalengka', '085722384826', 'Asep', 'asep'),
 (2, 'Dadan', 'Majalengka', '085722384826', 'Dadan', 'dadan'),
-(3, 'Nurjaman', '<p><span style=\"font-weight: normal;\">Majalengka</span><br></p>', '083150687527', 'Nurjaman', 'nur');
+(3, 'Nurjaman', '<p><span style=\"font-weight: normal;\">Majalengka</span><br></p>', '083150687527', 'Nurjaman', 'nur'),
+(4, 'Jaja', 'Apuy', '085722384826', 'jaja', 'jaja');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tb_penghasilan`
+--
+
+CREATE TABLE `tb_penghasilan` (
+  `id_penghasilan` int(11) NOT NULL,
+  `pemasukan` int(11) NOT NULL,
+  `pengeluaran` int(11) NOT NULL,
+  `tanggal` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data untuk tabel `tb_penghasilan`
+--
+
+INSERT INTO `tb_penghasilan` (`id_penghasilan`, `pemasukan`, `pengeluaran`, `tanggal`) VALUES
+(1, 500000, 300000, '2023-07-15'),
+(3, 600000, 340000, '2023-07-20');
 
 -- --------------------------------------------------------
 
@@ -112,42 +145,40 @@ CREATE TABLE `tb_product` (
   `harga_air` double NOT NULL DEFAULT 10000,
   `harga_tutup` double NOT NULL DEFAULT 1500,
   `harga_pembersih` double NOT NULL DEFAULT 1500,
-  `harga_galon` double NOT NULL DEFAULT 10000
+  `harga_galon` double NOT NULL DEFAULT 10000,
+  `jumlah` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `tb_product`
 --
 
-INSERT INTO `tb_product` (`id_product`, `kode`, `judul`, `deskripsi`, `harga`, `gl`, `air`, `tutup`, `pembersih`, `harga_air`, `harga_tutup`, `harga_pembersih`, `harga_galon`) VALUES
-(7, 'GK01', 'Aqua', 'Paket Lengkap', 18000, 1, 1, 1, 1, 10000, 1500, 1500, 10000),
-(8, 'GU01', 'Aqua', 'Isi Ulang ', 8000, 0, 1, 1, 1, 10000, 1500, 1500, 10000);
+INSERT INTO `tb_product` (`id_product`, `kode`, `judul`, `deskripsi`, `harga`, `gl`, `air`, `tutup`, `pembersih`, `harga_air`, `harga_tutup`, `harga_pembersih`, `harga_galon`, `jumlah`) VALUES
+(7, 'GK01', 'Aqua', 'Paket Lengkap', 18000, 1, 1, 1, 1, 10000, 1500, 1500, 10000, 93),
+(8, 'GU01', 'Aqua', 'Isi Ulang ', 8000, 0, 1, 1, 1, 10000, 1500, 1500, 10000, 100);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tb_transaksi`
+-- Struktur dari tabel `transaksi`
 --
 
-CREATE TABLE `tb_transaksi` (
+CREATE TABLE `transaksi` (
   `id_transaksi` int(11) NOT NULL,
   `id_petugas` int(11) NOT NULL,
   `id_order` int(11) NOT NULL,
   `jumlah` int(11) NOT NULL,
-  `harga` double NOT NULL,
+  `harga` int(11) NOT NULL,
+  `metode_bayar` varchar(120) NOT NULL,
   `tanggal` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Trigger `tb_transaksi`
+-- Dumping data untuk tabel `transaksi`
 --
-DELIMITER $$
-CREATE TRIGGER `t_transaksi` AFTER INSERT ON `tb_transaksi` FOR EACH ROW BEGIN
-UPDATE tb_product SET stok=stok - NEW.jumlah
-WHERE id_product = NEW.id_product;
-END
-$$
-DELIMITER ;
+
+INSERT INTO `transaksi` (`id_transaksi`, `id_petugas`, `id_order`, `jumlah`, `harga`, `metode_bayar`, `tanggal`) VALUES
+(4, 0, 7, 5, 18000, 'Cod', '2015-07-23');
 
 --
 -- Indexes for dumped tables
@@ -168,6 +199,12 @@ ALTER TABLE `tb_pelanggan`
   ADD PRIMARY KEY (`id_pelanggan`);
 
 --
+-- Indeks untuk tabel `tb_penghasilan`
+--
+ALTER TABLE `tb_penghasilan`
+  ADD PRIMARY KEY (`id_penghasilan`);
+
+--
 -- Indeks untuk tabel `tb_petugas`
 --
 ALTER TABLE `tb_petugas`
@@ -180,11 +217,10 @@ ALTER TABLE `tb_product`
   ADD PRIMARY KEY (`id_product`);
 
 --
--- Indeks untuk tabel `tb_transaksi`
+-- Indeks untuk tabel `transaksi`
 --
-ALTER TABLE `tb_transaksi`
+ALTER TABLE `transaksi`
   ADD PRIMARY KEY (`id_transaksi`),
-  ADD KEY `id_petugas` (`id_petugas`,`id_order`),
   ADD KEY `id_order` (`id_order`);
 
 --
@@ -195,13 +231,19 @@ ALTER TABLE `tb_transaksi`
 -- AUTO_INCREMENT untuk tabel `tb_order`
 --
 ALTER TABLE `tb_order`
-  MODIFY `id_order` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_order` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_pelanggan`
 --
 ALTER TABLE `tb_pelanggan`
-  MODIFY `id_pelanggan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_pelanggan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT untuk tabel `tb_penghasilan`
+--
+ALTER TABLE `tb_penghasilan`
+  MODIFY `id_penghasilan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_petugas`
@@ -216,10 +258,10 @@ ALTER TABLE `tb_product`
   MODIFY `id_product` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT untuk tabel `tb_transaksi`
+-- AUTO_INCREMENT untuk tabel `transaksi`
 --
-ALTER TABLE `tb_transaksi`
-  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `transaksi`
+  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
@@ -233,11 +275,10 @@ ALTER TABLE `tb_order`
   ADD CONSTRAINT `tb_order_ibfk_2` FOREIGN KEY (`id_pelanggan`) REFERENCES `tb_pelanggan` (`id_pelanggan`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `tb_transaksi`
+-- Ketidakleluasaan untuk tabel `transaksi`
 --
-ALTER TABLE `tb_transaksi`
-  ADD CONSTRAINT `tb_transaksi_ibfk_1` FOREIGN KEY (`id_petugas`) REFERENCES `tb_petugas` (`id_petugas`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `tb_transaksi_ibfk_3` FOREIGN KEY (`id_order`) REFERENCES `tb_order` (`id_order`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `transaksi`
+  ADD CONSTRAINT `transaksi_ibfk_1` FOREIGN KEY (`id_order`) REFERENCES `tb_order` (`id_order`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
